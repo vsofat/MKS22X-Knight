@@ -4,11 +4,14 @@ import java.util.Arrays;
 public class KnightBoard{
 
   public static void main(String[] args) {
-  KnightBoard board = new KnightBoard(5, 5);
-  System.out.println(board.toString());
-  System.out.println(board.solve(0, 0));
-  System.out.println(board.toString());
-}
+  /*  KnightBoard board = new KnightBoard(5, 5);
+    System.out.println(board.toString());
+    System.out.println(board.solve(0, 0));
+    System.out.println(board.toString()); */
+    for (int index = 0; index < 6; index ++){
+      runTest(index);
+    }
+  }
 
   private int[][] board;
   private int total = 0;
@@ -25,19 +28,46 @@ public class KnightBoard{
     }
   }
 
+  public static void runTest(int i){
+
+    KnightBoard b;
+    int[]m =   {4,5,5,5,5};
+    int[]n =   {4,5,4,5,5};
+    int[]startx = {0,0,0,1,2};
+    int[]starty = {0,0,0,1,2};
+    int[]answers = {0,304,32,56,64};
+    if(i >= 0 ){
+      try{
+        int correct = answers[i];
+        b = new KnightBoard(m[i%m.length],n[i%m.length]);
+
+        int ans  = b.countSolutions(startx[i],starty[i]);
+
+        if(correct==ans){
+          System.out.println("PASS board size: "+m[i%m.length]+"x"+n[i%m.length]+" "+ans);
+        }else{
+          System.out.println("FAIL board size: "+m[i%m.length]+"x"+n[i%m.length]+" "+ans+" vs "+correct);
+        }
+      }catch(Exception e){
+        System.out.println("FAIL Exception case: "+i);
+
+      }
+    }
+  }
+
   public String toString(){
-    String result = "";
+    String total = "";
     for (int row = 0; row < board.length; row++){
       for (int col = 0; col < board[0].length; col++){
         if (board[row][col] % 10 == board[row][col]){
-          result += "  " + board[row][col];
+          total += "  " + board[row][col];
         } else {
-          result += " " + board[row][col];
+          total += " " + board[row][col];
         }
       }
-      result += "\n";
+      total += "\n";
     }
-    return result;
+    return total;
   }
 
   public boolean solve(int startingRow, int startingCol){
@@ -145,25 +175,46 @@ public class KnightBoard{
   }
 
   public int countHelper(int row, int col, int level) {
-    if (level == ((board.length * board[0].length) + 1)) {
-    return 1;
-  }
-  if ((row >= board.length) || (col >= board[0].length) || (row < 0) || (col < 0)) {
-    return 0;
-  }
-  if (addKnight(row, col, level)) {
-    total = total + countHelper(row + 2, col + 1, level + 1);
-    total = total + countHelper(row + 2, col - 1, level + 1);
-    total = total + countHelper(row + 1, col + 2, level + 1);
-    total = total + countHelper(row - 1, col + 2, level + 1);
-    total = total + countHelper(row - 2, col + 1, level + 1);
-    total = total + countHelper(row - 2, col - 1, level + 1);
-    total = total + countHelper(row + 1, col - 2, level + 1);
-    total = total + countHelper(row - 1, col - 2, level + 1);
-    removeKnight(row, col);
-  }
-  return total;
-  }
+    int total = 0;
+    if (row >= board.length || col >= board[0].length || row < 0 || col < 0){
+      return 0;
+    }
+    if (board[row][col] != 0){
+      return 0;
+    }
+    if (level == board.length * board[0].length){
+      return 1;
+    }
+    for (int i = 0; i < 8; i++){
+      board[row][col] = level;
+      if (i == 0){
+        total += countHelper(row + 2, col + 1, level + 1);
+      }
+      if (i == 1){
+        total += countHelper(row + 2, col - 1, level + 1);
+      }
+      if (i == 2){
+        total += countHelper(row - 2, col - 1, level + 1);
+      }
+      if (i == 3){
+        total += countHelper(row - 2, col + 1, level + 1);
+      }
+      if (i == 4){
+        total += countHelper(row + 1, col + 2, level + 1);
+      }
+      if (i == 5){
+        total += countHelper(row + 1, col - 2, level + 1);
+      }
+      if (i == 6){
+        total += countHelper(row - 1, col + 2, level + 1);
+      }
+      if (i == 7){
+        total += countHelper(row - 1, col - 2, level + 1);
+      }
+      board[row][col] = 0;
+    }
+    return total;
+  } // Alex helped me change this part too
 
 } // closing
 
