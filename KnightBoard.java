@@ -12,7 +12,8 @@ public class KnightBoard{
       runTest(index);
     }*/
     KnightBoard board = new KnightBoard(8,8);
-    int[][] moves = board.BoardOptimizer();
+    board.BoardOptimizer();
+    int moves[][] = board.replacement;
     String result = "";
     for (int row = 0; row < board.board.length; row++){
       for (int col = 0; col < board.board[0].length; col++){
@@ -27,6 +28,7 @@ public class KnightBoard{
 
   private int[][] board;
   private int total = 0;
+  private int[][] replacement;
 
   public KnightBoard(int rows, int cols){
     if (rows <= 0 || cols <= 0){
@@ -38,6 +40,7 @@ public class KnightBoard{
         board[r][c] = 0;
       }
     }
+    replacement = new int[rows][cols];
   }
 
   public static void runTest(int i){
@@ -244,7 +247,6 @@ The pattern for BoardOptimizer:
 */
 
   private int[][] BoardOptimizer(){
-    int[][] replacement = new int[board.length][board[0].length];
     for (int row = 0; row < board.length; row++){
       for (int col = 0; col < board[0].length; col++){
         if (row == 0 || row == board.length){
