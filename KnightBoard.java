@@ -44,18 +44,23 @@ public class KnightBoard{
         }
       }
     }
-    //    return solveHelperelper(startingRow, startingCol, 1); // need to update according to parameters
+    return solveHelperelper(startingRow, startingCol, 1);
   }
 
   public boolean solveHelper(int row, int col, int level){
-    if addKnight(row,col,level){
+    if (level == ((board.length *  board[0].length)+1)){
+      return true;
+    }
+    if ((row >= board.length) || (col >= board[0].length) || (row < 0) || (col < 0)) {
+      return false;
+    }
+    if (addKnight(row,col,level)){
       if (row >= board.length || col >= board[0].length || row < 0 || col < 0){
         return false;
       }
       if (board[row][col] != 0){
         return false;
-      }
-
+      } // checking for value at location
       if (solveHelper(row + 2, col + 1, level + 1)){
         return true;
       }
@@ -83,14 +88,23 @@ public class KnightBoard{
     }
   }
 
-  public boolean addKnight(int staRow, int staCol, int level) {
-    if (board[staRow][staCol] != 0) {
+  public boolean addKnight(int row, int col, int level) {
+    if (board[row][col] != 0) {
       return false;
     }
-    board[staRow][staCol] = level;
+    board[row][col] = level;
     return true;
   }
 
+  public boolean removeKnight (int row, int col){ // might have to add a level paramater here as well
+    if (board[row][col] != 0){
+      board[row][col] = 0;
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
 
 } // closing
 
