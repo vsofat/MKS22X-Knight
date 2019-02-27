@@ -44,10 +44,10 @@ public class KnightBoard{
         }
       }
     }
-    return solveHelperelper(startingRow, startingCol, 1);
+    return solveHelperelpe r(startingRow, startingCol, 1);
   }
 
-  public boolean solveHelper(int row, int col, int level){
+  public boolean solveHelperelper(int row, int col, int level){
     if (level == ((board.length *  board[0].length)+1)){
       return true;
     }
@@ -61,28 +61,28 @@ public class KnightBoard{
       if (board[row][col] != 0){
         return false;
       } // checking for value at location
-      if (solveHelper(row + 2, col + 1, level + 1)){
+      if (solveHelperelper(row + 2, col + 1, level + 1)){
         return true;
       }
-      if (solveHelper(row + 2, col - 1, level + 1)){
+      if (solveHelperelper(row + 2, col - 1, level + 1)){
         return true;
       }
-      if (solveHelper(row + 1, col + 2, level + 1)){
+      if (solveHelperelper(row + 1, col + 2, level + 1)){
         return true;
       }
-      if (solveHelper(row - 1, col + 2, level + 1)){
+      if (solveHelperelper(row - 1, col + 2, level + 1)){
         return true;
       }
-      if (solveHelper(row - 2, col + 1, level + 1)){
+      if (solveHelperelper(row - 2, col + 1, level + 1)){
         return true;
       }
-      if (solveHelper(row - 2, col - 1, level + 1)){
+      if (solveHelperelper(row - 2, col - 1, level + 1)){
         return true;
       }
-      if (solveHelper(row + 1, col - 2, level + 1)){
+      if (solveHelperelper(row + 1, col - 2, level + 1)){
         return true;
       }
-      if (solveHelper(row - 1, col - 2, level + 1)){
+      if (solveHelperelper(row - 1, col - 2, level + 1)){
         return true;
       }
     }
@@ -104,6 +104,57 @@ public class KnightBoard{
     else{
       return false;
     }
+  }
+
+  public int countSolutions throws IllegalStateException(int startingRow, int startingCol) {
+    for (int startingRow = 0; startingRow < board.length; startingRow++) {
+      for (int startingCol = 0; startingCol < board[0].length; startingCol++) {
+        if (board[startingRow][startingCol] != 0) {
+          throw new IllegalStateException();
+        }
+      }
+    }
+    if ((startingRow < 0) || (startingCol < 0) || (startingRow >= board.length) || (startingCol >= board[0].length)) {
+      throw new IllegalArgumentException();
+    }
+    return countHelper(startingRow, startingCol);
+  }
+
+  public int countHelper(int row, int col) {
+    if (level == ((board.length * board[0].length) + 1)) {
+      return true;
+    }
+    if ((row >= board.length) || (col >= board[0].length) || (row < 0) || (col < 0)) {
+      return false;
+    }
+    if (placeKnight(row, col, level)) {
+      if (solveHelper(row + 2, col + 1, level + 1)) {
+        return true;
+      }
+      if (solveHelper(row + 2, col - 1, level + 1)) {
+        return true;
+      }
+      if (solveHelper(row + 1, col + 2, level + 1)) {
+        return true;
+      }
+      if (solveHelper(row - 1, col + 2, level + 1)) {
+        return true;
+      }
+      if (solveHelper(row - 2, col + 1, level + 1)) {
+        return true;
+      }
+      if (solveHelper(row - 2, col - 1, level + 1)) {
+        return true;
+      }
+      if (solveHelper(row + 1, col - 2, level + 1)) {
+        return true;
+      }
+      if (solveHelper(row - 1, col - 2, level + 1)) {
+        return true;
+      }
+      removeKnight(row, col);
+    }
+    return false;
   }
 
 } // closing
@@ -132,6 +183,6 @@ or out of bounds.
 public int countSolutions(int startingRow, int startingCol)
 
 Suggestion:
-private boolean solveHelper(int row ,int col, int level)
+private boolean solveHelperelper(int row ,int col, int level)
 // level is the # of the knight
 */
