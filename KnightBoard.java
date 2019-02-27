@@ -14,4 +14,19 @@ public class KnightBoard{
     }
   }
 
-}
+  public String toString(){
+    String result = "";
+    for (int row = 0; row < board.length; row++){
+      for (int col = 0; col < board[0].length; col++){
+        if (board[row][col] % 10 == board[row][col]){
+          result += "  " + board[row][col];
+        } else {
+          result += " " + board[row][col];
+        }
+      }
+      result += "/n";
+    }
+    return result;
+  }
+
+} // closing
