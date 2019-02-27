@@ -106,7 +106,7 @@ public class KnightBoard{
     }
   }
 
-  public int countSolutions throws IllegalStateException(int startingRow, int startingCol) {
+  public int countSolutions(int startingRow, int startingCol) {
     for (int startingRow = 0; startingRow < board.length; startingRow++) {
       for (int startingCol = 0; startingCol < board[0].length; startingCol++) {
         if (board[startingRow][startingCol] != 0) {
@@ -120,41 +120,25 @@ public class KnightBoard{
     return countHelper(startingRow, startingCol);
   }
 
-  public int countHelper(int row, int col) {
+  public int countHelper(int row, int col, int level) {
     if (level == ((board.length * board[0].length) + 1)) {
-      return true;
-    }
-    if ((row >= board.length) || (col >= board[0].length) || (row < 0) || (col < 0)) {
-      return false;
-    }
-    if (placeKnight(row, col, level)) {
-      if (solveHelper(row + 2, col + 1, level + 1)) {
-        return true;
-      }
-      if (solveHelper(row + 2, col - 1, level + 1)) {
-        return true;
-      }
-      if (solveHelper(row + 1, col + 2, level + 1)) {
-        return true;
-      }
-      if (solveHelper(row - 1, col + 2, level + 1)) {
-        return true;
-      }
-      if (solveHelper(row - 2, col + 1, level + 1)) {
-        return true;
-      }
-      if (solveHelper(row - 2, col - 1, level + 1)) {
-        return true;
-      }
-      if (solveHelper(row + 1, col - 2, level + 1)) {
-        return true;
-      }
-      if (solveHelper(row - 1, col - 2, level + 1)) {
-        return true;
-      }
-      removeKnight(row, col);
-    }
-    return false;
+    return 1;
+  }
+  if ((row >= board.length) || (col >= board[0].length) || (row < 0) || (col < 0)) {
+    return 0;
+  }
+  if (placeKnight(row, col, level)) {
+    total = total + countHelper(row + 2, col + 1, level + 1);
+    total = total + countHelper(row + 2, col - 1, level + 1);
+    total = total + countHelper(row + 1, col + 2, level + 1);
+    total = total + countHelper(row - 1, col + 2, level + 1);
+    total = total + countHelper(row - 2, col + 1, level + 1);
+    total = total + countHelper(row - 2, col - 1, level + 1);
+    total = total + countHelper(row + 1, col - 2, level + 1);
+    total = total + countHelper(row - 1, col - 2, level + 1);
+    removeKnight(row, col);
+  }
+  return count;
   }
 
 } // closing
