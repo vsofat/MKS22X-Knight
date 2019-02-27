@@ -44,43 +44,52 @@ public class KnightBoard{
         }
       }
     }
-//    return solveHelperelper(startingRow, startingCol, 1); // need to update according to parameters
+    //    return solveHelperelper(startingRow, startingCol, 1); // need to update according to parameters
   }
 
-  public boolean solveHelperelper(int row, int col, int level){
-    if (row >= board.length || col >= board[0].length || row < 0 || col < 0){
-      return false;
-    }
-    if (board[row][col] != 0){
-      return false;
-    }
+  public boolean solveHelper(int row, int col, int level){
+    if addKnight(row,col,level){
+      if (row >= board.length || col >= board[0].length || row < 0 || col < 0){
+        return false;
+      }
+      if (board[row][col] != 0){
+        return false;
+      }
 
-    if (solveHelper(row + 2, col + 1, level + 1)){
-      return true;
-    }
-    if (solveHelper(row + 2, col - 1, level + 1)){
-      return true;
-    }
-    if (solveHelper(row + 1, col + 2, level + 1)){
-      return true;
-    }
-    if (solveHelper(row - 1, col + 2, level + 1)){
-      return true;
-    }
-    if (solveHelper(row - 2, col + 1, level + 1)){
-      return true;
-    }
-    if (solveHelper(row - 2, col - 1, level + 1)){
-      return true;
-    }
-    if (solveHelper(row + 1, col - 2, level + 1)){
-      return true;
-    }
-    if (solveHelper(row - 1, col - 2, level + 1)){
-      return true;
+      if (solveHelper(row + 2, col + 1, level + 1)){
+        return true;
+      }
+      if (solveHelper(row + 2, col - 1, level + 1)){
+        return true;
+      }
+      if (solveHelper(row + 1, col + 2, level + 1)){
+        return true;
+      }
+      if (solveHelper(row - 1, col + 2, level + 1)){
+        return true;
+      }
+      if (solveHelper(row - 2, col + 1, level + 1)){
+        return true;
+      }
+      if (solveHelper(row - 2, col - 1, level + 1)){
+        return true;
+      }
+      if (solveHelper(row + 1, col - 2, level + 1)){
+        return true;
+      }
+      if (solveHelper(row - 1, col - 2, level + 1)){
+        return true;
+      }
     }
   }
 
+  public boolean addKnight(int staRow, int staCol, int level) {
+    if (board[staRow][staCol] != 0) {
+      return false;
+    }
+    board[staRow][staCol] = level;
+    return true;
+  }
 
 
 } // closing
