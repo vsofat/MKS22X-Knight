@@ -1,6 +1,7 @@
 public class KnightBoard{
 
   private int[][] board;
+  private int total = 0;
 
   public KnightBoard(int rows, int cols){
     if (rows <= 0 || cols <= 0){
@@ -24,7 +25,7 @@ public class KnightBoard{
           result += " " + board[row][col];
         }
       }
-      result += "/n";
+      result += "\n";
     }
     return result;
   }
@@ -40,17 +41,16 @@ public class KnightBoard{
         }
       }
     }
-    return solveHelper(startingRow, startingCol);
+    return solveHelper(startingRow, startingCol, 1);
   }
 
-  public boolean solveHelper(int row, int col){
-    if (row > board.length || col > board[0].length){
+  public boolean solveHelper(int row, int col, int numKnights){
+    if (row >= board.length || col >= board[0].length || row < 0 || col < 0){
       return false;
     }
-    board[row][col] = numKnights;
-    numKnights++;
-    return solveHelper(row + 2, col + 1) || solveHelper(row - 2, col + 1) || solveHelper(row + 2, col - 1) || solveHelper(row - 2, col - 1)
-    || solveHelper(row + 1, col + 2) || solveHelper(row - 1, col + 2) || solveHelper(row + 1, col - 2) || solveHelper(row - 1, col - 2);
-  }
+    if (board[row][col] != 0){
+      return false;
+    }}
+
 
 } // closing
