@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class KnightBoard{
 
   private int[][] board;
@@ -41,16 +44,71 @@ public class KnightBoard{
         }
       }
     }
-    return solveHelper(startingRow, startingCol, 1);
+//    return solveHelperelper(startingRow, startingCol, 1); // need to update according to parameters
   }
 
-  public boolean solveHelper(int row, int col, int numKnights){
+  public boolean solveHelperelper(int row, int col, int level){
     if (row >= board.length || col >= board[0].length || row < 0 || col < 0){
       return false;
     }
     if (board[row][col] != 0){
       return false;
-    }}
+    }
+
+    if (solveHelper(row + 2, col + 1, level + 1)){
+      return true;
+    }
+    if (solveHelper(row + 2, col - 1, level + 1)){
+      return true;
+    }
+    if (solveHelper(row + 1, col + 2, level + 1)){
+      return true;
+    }
+    if (solveHelper(row - 1, col + 2, level + 1)){
+      return true;
+    }
+    if (solveHelper(row - 2, col + 1, level + 1)){
+      return true;
+    }
+    if (solveHelper(row - 2, col - 1, level + 1)){
+      return true;
+    }
+    if (solveHelper(row + 1, col - 2, level + 1)){
+      return true;
+    }
+    if (solveHelper(row - 1, col - 2, level + 1)){
+      return true;
+    }
+  }
+
 
 
 } // closing
+
+/*
+KnightBoard has 3 public methods and a constructor, a private helper is needed as well.
+
+@throws IllegalArgumentException when either parameter is negative.
+public KnightBoard(int startingRows,int startingCols)
+
+Initialize the board to the correct size and make them all 0's
+public String toString()
+see format for toString below
+blank boards display 0's as underscores
+you get a blank board if you never called solve or
+when there is no solution
+
+@throws IllegalStateException when the board contains non-zero values.
+@throws IllegalArgumentException when either parameter is negative
+or out of bounds.
+public boolean solve(int startingRow, int startingCol)
+
+@throws IllegalStateException when the board contains non-zero values.
+@throws IllegalArgumentException when either parameter is negative
+or out of bounds.
+public int countSolutions(int startingRow, int startingCol)
+
+Suggestion:
+private boolean solveHelper(int row ,int col, int level)
+// level is the # of the knight
+*/
