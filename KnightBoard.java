@@ -8,9 +8,21 @@ public class KnightBoard{
     System.out.println(board.toString());
     System.out.println(board.solve(0, 0));
     System.out.println(board.toString()); */
-    for (int index = 0; index < 6; index ++){
+  /*  for (int index = 0; index < 6; index ++){
       runTest(index);
+    }*/
+    KnightBoard board = new KnightBoard(8,8);
+    int[][] moves = board.BoardOptimizer();
+    String result = "";
+    for (int row = 0; row < board.board.length; row++){
+      for (int col = 0; col < board.board[0].length; col++){
+        result += moves[row][col];
+        result += " ";
+      }
+      result += "\n";
     }
+
+    System.out.println(result);
   }
 
   private int[][] board;
@@ -215,6 +227,67 @@ public class KnightBoard{
     }
     return total;
   } // Alex helped me change this part too
+
+// Went to CS Dojo 02/27/19 --  William helped me
+
+/*
+
+The pattern for BoardOptimizer:
+
+2 3 4 4 4 4 3 2
+3 4 6 6 6 6 4 3
+4 6 8 8 8 8 6 4
+4 6 8 8 8 8 6 4
+3 4 6 6 6 6 4 3
+2 3 4 4 4 4 3 2
+
+*/
+
+  private int[][] BoardOptimizer(){
+    int[][] replacement = new int[board.length][board[0].length];
+    for (int row = 0; row < board.length; row++){
+      for (int col = 0; col < board[0].length; col++){
+        if (row == 0 || row == board.length){
+          if (col == 0 || col == board[0].length){
+            replacement[row][col] = 2;
+          }
+          if (col == 1 || col == board[0].length - 1){
+            replacement[row][col] = 3;
+          }
+          else{
+            replacement[row][col] = 4;
+          }
+        }
+
+      if(row == 1 || row == board.length - 1){
+        if (col == 0 || col == board[0].length){
+          replacement[row][col] = 3;
+        }
+        if (col == 1 || col == board[0].length - 1){
+          replacement[row][col] = 4;
+        }
+        else{
+          replacement[row][col] = 6;
+        }
+      }
+
+      else{
+        if (col == 0 || col == board[0].length){
+          replacement[row][col] = 4;
+        }
+        if (col == 1 || col == board[0].length - 1){
+          replacement[row][col] = 6;
+        }
+        else{
+          replacement[row][col] = 8;
+        }
+
+      }
+      }
+    }
+    return replacement;
+  }
+
 
 } // closing
 
