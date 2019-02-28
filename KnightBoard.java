@@ -3,233 +3,242 @@ import java.util.Arrays;
 
 public class KnightBoard{
 
+  private class move{
+    int rowInc;
+    int colInc;
+    private move(int rowInput, int colInput){
+      rowInc = rowInput;
+      colInc = colInput;
+    }
+  }
+
   public static void main(String[] args) {
-  /*  KnightBoard board = new KnightBoard(5, 5);
+    /*  KnightBoard board = new KnightBoard(5, 5);
     System.out.println(board.toString());
     System.out.println(board.solve(0, 0));
     System.out.println(board.toString()); */
-  /*  for (int index = 0; index < 6; index ++){
-      runTest(index);
-    }*/
-    KnightBoard board = new KnightBoard(8,8);
-    board.BoardOptimizer();
-    int moves[][] = board.replacement;
-    String result = "";
-    for (int row = 0; row < board.board.length; row++){
-      for (int col = 0; col < board.board[0].length; col++){
-        result += moves[row][col];
-        result += " ";
-      }
-      result += "\n";
+    /*  for (int index = 0; index < 6; index ++){
+    runTest(index);
+  }*/
+  KnightBoard board = new KnightBoard(8,8);
+  board.BoardOptimizer();
+  int moves[][] = board.replacement;
+  String result = "";
+  for (int row = 0; row < board.board.length; row++){
+    for (int col = 0; col < board.board[0].length; col++){
+      result += moves[row][col];
+      result += " ";
     }
-
-    System.out.println(result);
+    result += "\n";
   }
 
-  private int[][] board;
-  private int total = 0;
-  private int[][] replacement;
+  System.out.println(result);
+}
 
-  public KnightBoard(int rows, int cols){
-    if (rows <= 0 || cols <= 0){
-      throw new IllegalArgumentException("Both rows and columns must have a value greater than 0.");
-    }
-    board = new int[rows][cols];
-    for (int r = 0; r < board.length; r++){
-      for (int c = 0; c < board[0].length; c++){
-        board[r][c] = 0;
-      }
-    }
-    replacement = new int[rows][cols];
+private int[][] board;
+private int total = 0;
+private int[][] replacement; // model board
+
+public KnightBoard(int rows, int cols){
+  if (rows <= 0 || cols <= 0){
+    throw new IllegalArgumentException("Both rows and columns must have a value greater than 0.");
   }
-
-  public static void runTest(int i){
-
-    KnightBoard b;
-    int[]m =   {4,5,5,5,5};
-    int[]n =   {4,5,4,5,5};
-    int[]startx = {0,0,0,1,2};
-    int[]starty = {0,0,0,1,2};
-    int[]answers = {0,304,32,56,64};
-    if(i >= 0 ){
-      try{
-        int correct = answers[i];
-        b = new KnightBoard(m[i%m.length],n[i%m.length]);
-
-        int ans  = b.countSolutions(startx[i],starty[i]);
-
-        if(correct==ans){
-          System.out.println("PASS board size: "+m[i%m.length]+"x"+n[i%m.length]+" "+ans);
-        }else{
-          System.out.println("FAIL board size: "+m[i%m.length]+"x"+n[i%m.length]+" "+ans+" vs "+correct);
-        }
-      }catch(Exception e){
-        System.out.println("FAIL Exception case: "+i);
-
-      }
+  board = new int[rows][cols];
+  for (int r = 0; r < board.length; r++){
+    for (int c = 0; c < board[0].length; c++){
+      board[r][c] = 0;
     }
   }
+  replacement = new int[rows][cols];
+}
 
-  public String toString(){
-    String total = "";
-    for (int row = 0; row < board.length; row++){
-      for (int col = 0; col < board[0].length; col++){
-        if (board[row][col] % 10 == board[row][col]){
-          total += "  " + board[row][col];
-        } else {
-          total += " " + board[row][col];
-        }
+public static void runTest(int i){
+
+  KnightBoard b;
+  int[]m =   {4,5,5,5,5};
+  int[]n =   {4,5,4,5,5};
+  int[]startx = {0,0,0,1,2};
+  int[]starty = {0,0,0,1,2};
+  int[]answers = {0,304,32,56,64};
+  if(i >= 0 ){
+    try{
+      int correct = answers[i];
+      b = new KnightBoard(m[i%m.length],n[i%m.length]);
+
+      int ans  = b.countSolutions(startx[i],starty[i]);
+
+      if(correct==ans){
+        System.out.println("PASS board size: "+m[i%m.length]+"x"+n[i%m.length]+" "+ans);
+      }else{
+        System.out.println("FAIL board size: "+m[i%m.length]+"x"+n[i%m.length]+" "+ans+" vs "+correct);
       }
-      total += "\n";
+    }catch(Exception e){
+      System.out.println("FAIL Exception case: "+i);
+
     }
-    return total;
   }
+}
 
-  public boolean solve(int startingRow, int startingCol){
-    if (startingRow < 0 || startingRow >= board.length || startingCol < 0 || startingCol >= board[0].length){
-      throw new IllegalArgumentException("The values for starting row and starting column must be greater than zero.");
-    }
-    for (int row = 0; row < board.length; row++){
-      for (int col = 0; col < board[0].length; col++){
-        if (board[row][col] != 0){
-          throw new IllegalArgumentException("Board can only contain 0");
-        }
+public String toString(){
+  String total = "";
+  for (int row = 0; row < board.length; row++){
+    for (int col = 0; col < board[0].length; col++){
+      if (board[row][col] % 10 == board[row][col]){
+        total += "  " + board[row][col];
+      } else {
+        total += " " + board[row][col];
       }
     }
-    return solveHelper(startingRow, startingCol, 1);
+    total += "\n";
   }
+  return total;
+}
 
-  public boolean solveHelper(int row, int col, int level){
-    if (row >= board.length || col >= board[0].length || row < 0 || col < 0){
-      return false;
+public boolean solve(int startingRow, int startingCol){
+  if (startingRow < 0 || startingRow >= board.length || startingCol < 0 || startingCol >= board[0].length){
+    throw new IllegalArgumentException("The values for starting row and starting column must be greater than zero.");
+  }
+  for (int row = 0; row < board.length; row++){
+    for (int col = 0; col < board[0].length; col++){
+      if (board[row][col] != 0){
+        throw new IllegalArgumentException("Board can only contain 0");
+      }
     }
-    if (board[row][col] != 0){
-      return false;
-    }
-    if (level == board.length * board[0].length){
-      board[row][col] = level;
-      return true;
-    }
-    for (int i = 0; i < 8; i++){
-      board[row][col] = level;
-      if (i == 0){
-        if (solveHelper(row + 2, col + 1, level + 1)){
-          return true;
-        }
-      }
-      if (i == 1){
-        if (solveHelper(row + 2, col - 1, level + 1)){
-          return true;
-        }
-      }
-      if (i == 2){
-        if (solveHelper(row - 2, col - 1, level + 1)){
-          return true;
-        }
-      }
-      if (i == 3){
-        if (solveHelper(row - 2, col + 1, level + 1)){
-          return true;
-        }
-      }
-      if (i == 4){
-        if (solveHelper(row + 1, col + 2, level + 1)){
-          return true;
-        }
-      }
-      if (i == 5){
-        if (solveHelper(row + 1, col - 2, level + 1)){
-          return true;
-        }
-      }
-      if (i == 6){
-        if (solveHelper(row - 1, col + 2, level + 1)){
-          return true;
-        }
-      }
-      if (i == 7){
-        if (solveHelper(row - 1, col - 2, level + 1)){
-          return true;
-        }
-      }
-      board[row][col] = 0;
-    }
+  }
+  return solveHelper(startingRow, startingCol, 1);
+}
+
+public boolean solveHelper(int row, int col, int level){
+  if (row >= board.length || col >= board[0].length || row < 0 || col < 0){
     return false;
-  } // got help from Alex to restructure
-
-  public boolean addKnight(int row, int col, int level) {
-    if (board[row][col] != 0) {
-      return false;
-    }
+  }
+  if (board[row][col] != 0){
+    return false;
+  }
+  if (level == board.length * board[0].length){
     board[row][col] = level;
     return true;
   }
-
-  public boolean removeKnight (int row, int col){ // might have to add a level paramater here as well
-    if (board[row][col] != 0){
-      board[row][col] = 0;
-      return true;
+  for (int i = 0; i < 8; i++){
+    board[row][col] = level;
+    if (i == 0){
+      if (solveHelper(row + 2, col + 1, level + 1)){
+        return true;
+      }
     }
-    else{
-      return false;
+    if (i == 1){
+      if (solveHelper(row + 2, col - 1, level + 1)){
+        return true;
+      }
+    }
+    if (i == 2){
+      if (solveHelper(row - 2, col - 1, level + 1)){
+        return true;
+      }
+    }
+    if (i == 3){
+      if (solveHelper(row - 2, col + 1, level + 1)){
+        return true;
+      }
+    }
+    if (i == 4){
+      if (solveHelper(row + 1, col + 2, level + 1)){
+        return true;
+      }
+    }
+    if (i == 5){
+      if (solveHelper(row + 1, col - 2, level + 1)){
+        return true;
+      }
+    }
+    if (i == 6){
+      if (solveHelper(row - 1, col + 2, level + 1)){
+        return true;
+      }
+    }
+    if (i == 7){
+      if (solveHelper(row - 1, col - 2, level + 1)){
+        return true;
+      }
+    }
+    board[row][col] = 0;
+  }
+  return false;
+} // got help from Alex to restructure
+
+public boolean addKnight(int row, int col, int level) {
+  if (board[row][col] != 0) {
+    return false;
+  }
+  board[row][col] = level;
+  return true;
+}
+
+public boolean removeKnight (int row, int col){ // might have to add a level paramater here as well
+  if (board[row][col] != 0){
+    board[row][col] = 0;
+    return true;
+  }
+  else{
+    return false;
+  }
+}
+
+public int countSolutions(int startingRow, int startingCol) {
+  for ( int row = startingRow; row < board.length; row++) {
+    for (int col = startingCol; col < board[0].length; col++) {
+      if (board[row][col] != 0) {
+        throw new IllegalStateException();
+      }
     }
   }
-
-  public int countSolutions(int startingRow, int startingCol) {
-    for ( int row = startingRow; row < board.length; row++) {
-      for (int col = startingCol; col < board[0].length; col++) {
-        if (board[row][col] != 0) {
-          throw new IllegalStateException();
-        }
-      }
-    }
-    if ((startingRow < 0) || (startingCol < 0) || (startingRow >= board.length) || (startingCol >= board[0].length)) {
-      throw new IllegalArgumentException();
-    }
-    return countHelper(startingRow, startingCol, 1);
+  if ((startingRow < 0) || (startingCol < 0) || (startingRow >= board.length) || (startingCol >= board[0].length)) {
+    throw new IllegalArgumentException();
   }
+  return countHelper(startingRow, startingCol, 1);
+}
 
-  public int countHelper(int row, int col, int level) {
-    int total = 0;
-    if (row >= board.length || col >= board[0].length || row < 0 || col < 0){
-      return 0;
+public int countHelper(int row, int col, int level) {
+  int total = 0;
+  if (row >= board.length || col >= board[0].length || row < 0 || col < 0){
+    return 0;
+  }
+  if (board[row][col] != 0){
+    return 0;
+  }
+  if (level == board.length * board[0].length){
+    return 1;
+  }
+  for (int i = 0; i < 8; i++){
+    board[row][col] = level;
+    if (i == 0){
+      total += countHelper(row + 2, col + 1, level + 1);
     }
-    if (board[row][col] != 0){
-      return 0;
+    if (i == 1){
+      total += countHelper(row + 2, col - 1, level + 1);
     }
-    if (level == board.length * board[0].length){
-      return 1;
+    if (i == 2){
+      total += countHelper(row - 2, col - 1, level + 1);
     }
-    for (int i = 0; i < 8; i++){
-      board[row][col] = level;
-      if (i == 0){
-        total += countHelper(row + 2, col + 1, level + 1);
-      }
-      if (i == 1){
-        total += countHelper(row + 2, col - 1, level + 1);
-      }
-      if (i == 2){
-        total += countHelper(row - 2, col - 1, level + 1);
-      }
-      if (i == 3){
-        total += countHelper(row - 2, col + 1, level + 1);
-      }
-      if (i == 4){
-        total += countHelper(row + 1, col + 2, level + 1);
-      }
-      if (i == 5){
-        total += countHelper(row + 1, col - 2, level + 1);
-      }
-      if (i == 6){
-        total += countHelper(row - 1, col + 2, level + 1);
-      }
-      if (i == 7){
-        total += countHelper(row - 1, col - 2, level + 1);
-      }
-      board[row][col] = 0;
+    if (i == 3){
+      total += countHelper(row - 2, col + 1, level + 1);
     }
-    return total;
-  } // Alex helped me change this part too
+    if (i == 4){
+      total += countHelper(row + 1, col + 2, level + 1);
+    }
+    if (i == 5){
+      total += countHelper(row + 1, col - 2, level + 1);
+    }
+    if (i == 6){
+      total += countHelper(row - 1, col + 2, level + 1);
+    }
+    if (i == 7){
+      total += countHelper(row - 1, col - 2, level + 1);
+    }
+    board[row][col] = 0;
+  }
+  return total;
+} // Alex helped me change this part too
 
 // Went to CS Dojo 02/27/19 --  William helped me
 
@@ -246,20 +255,20 @@ The pattern for BoardOptimizer:
 
 */
 
-  private int[][] BoardOptimizer(){
-    for (int row = 0; row < board.length; row++){
-      for (int col = 0; col < board[0].length; col++){
-        if (row == 0 || row == board.length){
-          if (col == 0 || col == board[0].length){
-            replacement[row][col] = 2;
-          }
-          if (col == 1 || col == board[0].length - 1){
-            replacement[row][col] = 3;
-          }
-          else{
-            replacement[row][col] = 4;
-          }
+private int[][] BoardOptimizer(){
+  for (int row = 0; row < board.length; row++){
+    for (int col = 0; col < board[0].length; col++){
+      if (row == 0 || row == board.length){
+        if (col == 0 || col == board[0].length){
+          replacement[row][col] = 2;
         }
+        if (col == 1 || col == board[0].length - 1){
+          replacement[row][col] = 3;
+        }
+        else{
+          replacement[row][col] = 4;
+        }
+      }
 
       if(row == 1 || row == board.length - 1){
         if (col == 0 || col == board[0].length){
@@ -285,10 +294,10 @@ The pattern for BoardOptimizer:
         }
 
       }
-      }
     }
-    return replacement;
   }
+  return replacement;
+}
 
 
 } // closing
