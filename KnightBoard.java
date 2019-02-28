@@ -38,6 +38,7 @@ public class KnightBoard{
 private int[][] board;
 private int total = 0;
 private int[][] replacement; // model board
+ArrayList<move> moveList = new ArrayList<move>(8); //moves based off sample board
 
 public KnightBoard(int rows, int cols){
   if (rows <= 0 || cols <= 0){
@@ -297,6 +298,14 @@ private int[][] BoardOptimizer(){
     }
   }
   return replacement;
+}
+
+private void clear(){
+  for (int row=0; row<maxRows; row++){
+    for (int col=0; col<maxCols; col++){
+      board[row][col] = 0;
+    }
+  }
 }
 
 
