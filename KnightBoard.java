@@ -1,35 +1,36 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class KnightBoard{
+public class move{
 
-  private class move{
-    int row;
-    int col;
-    int possibleMoves;
+  int row;
+  int col;
+  int possibleMoves;
 
-    private move(int rowInput, int colInput){
-      row = rowInput;
-      col = colInput;
-    }
-
-    public int getCol(){
-      return this.col;
-    }
-
-    public int getRow(){
-      return this.row;
-    }
-
-    public int getPossibleMoves(){
-      return possibleMoves;
-    }
-
-    public void setPossibleMoves(int possibleMoves){
-      this.possibleMoves = possibleMoves;
-    }
-
+  private move(int rowInput, int colInput){
+    row = rowInput;
+    col = colInput;
   }
+
+  public int getCol(){
+    return this.col;
+  }
+
+  public int getRow(){
+    return this.row;
+  }
+
+  public int getPossibleMoves(){
+    return possibleMoves;
+  }
+
+  public void setPossibleMoves(int possibleMoves){
+    this.possibleMoves = possibleMoves;
+  }
+
+}
+
+public class KnightBoard{
 
   public static void main(String[] args) {
     /*  KnightBoard board = new KnightBoard(5, 5);
@@ -208,6 +209,10 @@ public boolean addKnight(int row, int col, int level) {
   return true;
 }
 
+private void addKnight(Move move, int level){
+  board[move.getRow()][move.getCol()] = level;
+}
+
 public boolean removeKnight (int row, int col){ // might have to add a level paramater here as well
   if (board[row][col] != 0){
     board[row][col] = 0;
@@ -217,6 +222,11 @@ public boolean removeKnight (int row, int col){ // might have to add a level par
     return false;
   }
 }
+
+private void removeKinght(Move move){
+  board[move.getRow()][move.getCol()] = 0;
+}
+
 
 public int countSolutions(int startingRow, int startingCol) {
   for ( int row = startingRow; row < board.length; row++) {
