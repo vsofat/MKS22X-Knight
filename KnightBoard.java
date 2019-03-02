@@ -6,6 +6,7 @@ public class KnightBoard{
   private class move{
     int rowInc;
     int colInc;
+
     private move(int rowInput, int colInput){
       rowInc = rowInput;
       colInc = colInput;
@@ -21,8 +22,8 @@ public class KnightBoard{
     runTest(index);
   }*/
   KnightBoard board = new KnightBoard(8,8);
-  board.BoardOptimizer();
-  int moves[][] = board.replacement;
+  board.BoardModeler();
+  int moves[][] = board.model;
   String result = "";
   for (int row = 0; row < board.board.length; row++){
     for (int col = 0; col < board.board[0].length; col++){
@@ -33,11 +34,16 @@ public class KnightBoard{
   }
 
   System.out.println(result);
+  System.out.println(" \n 2 3 4 4 4 4 3 2 \n 3 4 6 6 6 6 4 3 \n 4 6 8 8 8 8 6 4 \n 4 6 8 8 8 8 6 4 \n 3 4 6 6 6 6 4 3 \n 2 3 4 4 4 4 3 2");
+
 }
 
 private int[][] board;
 private int total = 0;
-private int[][] replacement; // model board
+private int[][] model; // model board
+private int rowLen;
+private int colLen;
+
 ArrayList<move> moveList = new ArrayList<move>(8); //moves based off sample board
 
 public KnightBoard(int rows, int cols){
@@ -50,10 +56,12 @@ public KnightBoard(int rows, int cols){
       board[r][c] = 0;
     }
   }
-  replacement = new int[rows][cols];
+  model = new int[rows][cols];
+  rowLen = rows;
+  colLen = cols;
 }
 
-public static void runTest(int i){
+public static void runTest(int i){ // from Mr. K's code
 
   KnightBoard b;
   int[]m =   {4,5,5,5,5};
@@ -245,7 +253,7 @@ public int countHelper(int row, int col, int level) {
 
 /*
 
-The pattern for BoardOptimizer:
+The pattern for BoardModeler:
 
 2 3 4 4 4 4 3 2
 3 4 6 6 6 6 4 3
@@ -256,53 +264,54 @@ The pattern for BoardOptimizer:
 
 */
 
-private int[][] BoardOptimizer(){
-  for (int row = 0; row < board.length; row++){
-    for (int col = 0; col < board[0].length; col++){
-      if (row == 0 || row == board.length){
-        if (col == 0 || col == board[0].length){
-          replacement[row][col] = 2;
+private int[][] BoardModeler(){
+  //model = new int[rowLen][colLen];
+  for (int row = 0; row < rowLen; row++){
+    for (int col = 0; col < colLen; col++){
+      if (row == 0 || row == rowLen - 1){
+        if (col == 0 || col == colLen - 1){
+          model[row][col] = 2;
         }
-        if (col == 1 || col == board[0].length - 1){
-          replacement[row][col] = 3;
+        else if (col == 1 || col == colLen - 2){
+          model[row][col] = 3;
         }
         else{
-          replacement[row][col] = 4;
+          model[row][col] = 4;
         }
       }
 
-      if(row == 1 || row == board.length - 1){
-        if (col == 0 || col == board[0].length){
-          replacement[row][col] = 3;
+      else if(row == 1 || row == rowLen - 2){
+        if (col == 0 || col == colLen - 1){
+          model[row][col] = 3;
         }
-        if (col == 1 || col == board[0].length - 1){
-          replacement[row][col] = 4;
+        else if (col == 1 || col == colLen - 2){
+          model[row][col] = 4;
         }
         else{
-          replacement[row][col] = 6;
+          model[row][col] = 6;
         }
       }
 
       else{
-        if (col == 0 || col == board[0].length){
-          replacement[row][col] = 4;
+        if (col == 0 || col == colLen - 1){
+          model[row][col] = 4;
         }
-        if (col == 1 || col == board[0].length - 1){
-          replacement[row][col] = 6;
+        else if (col == 1 || col == colLen - 2){
+          model[row][col] = 6;
         }
         else{
-          replacement[row][col] = 8;
+          model[row][col] = 8;
         }
 
       }
     }
   }
-  return replacement;
+  return model;
 }
 
 private void clear(){
-  for (int row=0; row<maxRows; row++){
-    for (int col=0; col<maxCols; col++){
+  for (int row=0; row< board.length; row++){
+    for (int col=0; col< board[0].length; col++){
       board[row][col] = 0;
     }
   }
