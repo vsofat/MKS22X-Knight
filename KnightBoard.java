@@ -4,13 +4,31 @@ import java.util.Arrays;
 public class KnightBoard{
 
   private class move{
-    int rowInc;
-    int colInc;
+    int row;
+    int col;
+    int possibleMoves;
 
     private move(int rowInput, int colInput){
-      rowInc = rowInput;
-      colInc = colInput;
+      row = rowInput;
+      col = colInput;
     }
+
+    public int getCol(){
+      return this.col;
+    }
+
+    public int getRow(){
+      return this.row;
+    }
+
+    public int getPossibleMoves(){
+      return possibleMoves;
+    }
+
+    public void setPossibleMoves(int possibleMoves){
+      this.possibleMoves = possibleMoves;
+    }
+
   }
 
   public static void main(String[] args) {
@@ -21,7 +39,11 @@ public class KnightBoard{
     /*  for (int index = 0; index < 6; index ++){
     runTest(index);
   }*/
+
   KnightBoard board = new KnightBoard(8,8);
+
+  // testing model board
+  /*
   board.BoardModeler();
   int moves[][] = board.model;
   String result = "";
@@ -34,7 +56,10 @@ public class KnightBoard{
   }
 
   System.out.println(result);
-  System.out.println(" \n 2 3 4 4 4 4 3 2 \n 3 4 6 6 6 6 4 3 \n 4 6 8 8 8 8 6 4 \n 4 6 8 8 8 8 6 4 \n 3 4 6 6 6 6 4 3 \n 2 3 4 4 4 4 3 2");
+  */
+
+  // to test the model board
+  //System.out.println(" \n 2 3 4 4 4 4 3 2 \n 3 4 6 6 6 6 4 3 \n 4 6 8 8 8 8 6 4 \n 4 6 8 8 8 8 6 4 \n 3 4 6 6 6 6 4 3 \n 2 3 4 4 4 4 3 2");
 
 }
 
