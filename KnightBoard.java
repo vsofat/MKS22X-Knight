@@ -69,7 +69,7 @@ private int total = 0;
 private int[][] model; // model board
 private int rowLen;
 private int colLen;
-
+int[] possibleCoordinates = new int[row - 2, col + 1, row - 2, col - 1, row - 1, col - 2, row - 1, col + 2, row + 2, col + 1, row + 2, col - 1, row + 1, col - 2, row + 1, col + 2]
 ArrayList<move> moveList = new ArrayList<move>(8); //moves based off sample board
 
 public KnightBoard(int rows, int cols){
@@ -223,6 +223,18 @@ public boolean removeKnight (int row, int col){ // might have to add a level par
   }
 }
 
+private List<Move> possibleMovesFromCurrent(Move position){
+  List <move> moves = new ArrayLisst<>(8);
+  int currentRow = this.getRoww();
+  int currentCol = this.getCol();
+  for (int location = 0; location < possibleCoordinates.size(); location++){
+    Move moveAtCurrentLocation = new Move(possibleCoordinates[i],possibleCoordinates[i+1]);
+    if (possible(moveAtCurrentLocation)){
+      move.add(moveAtCurrentLocation);
+    }
+  }
+}
+
 private boolean possible(Move move){
   int currentRow = this.getRoww();
   int currentCol = this.getCol();
@@ -365,6 +377,7 @@ private void clear(){
   }
 }
 
+// George helped me on 2/28 at the Cs Dojo -- forgot to add this comment earlier
 
 } // closing
 
