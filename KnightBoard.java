@@ -143,7 +143,7 @@ public boolean solve(int startingRow, int startingCol){
       }
     }
   }
-  return solveHelper(new Move (startingRow, startingCol), 1); // need to change solveHelper to have a move parameter
+  return solveHelper(new Move (startingRow, startingCol), 1);
 }
 
 public boolean solveHelper( Move current, int level){
@@ -163,7 +163,7 @@ public boolean solveHelper( Move current, int level){
     }
   }
   return false;
-} // got help from Alex to restructure
+}
 
 public boolean addKnight(int row, int col, int level) {
   if (board[row][col] != 0) {
@@ -216,19 +216,25 @@ private void removeKinght(Move move){
   board[move.getRow()][move.getCol()] = 0;
 }
 
-
 public int countSolutions(int startingRow, int startingCol) {
+  if (possible(new Move(startingRow, startingCol)) == false){
+    throw new IllegalArgumentException("No moves possible from given coordinates.");
+  }
   for ( int row = startingRow; row < board.length; row++) {
     for (int col = startingCol; col < board[0].length; col++) {
       if (board[row][col] != 0) {
-        throw new IllegalStateException();
+        throw new IllegalStateException("All values on board should be 0.");
       }
     }
   }
   if ((startingRow < 0) || (startingCol < 0) || (startingRow >= board.length) || (startingCol >= board[0].length)) {
-    throw new IllegalArgumentException();
+    throw new IllegalArgumentException("The given coordinates do not meet the restrictions for the program.");
   }
+
+  this.board = new int[rowLen][colLen];
+
   return countHelper(startingRow, startingCol, 1);
+
 }
 
 public int countHelper(int row, int col, int level) {
