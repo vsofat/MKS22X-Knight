@@ -4,15 +4,17 @@ import java.util.Collections;
 
 public class KnightBoard{
 
+  // Ethan helped me debug.
+
   public static void main(String[] args) {
     /*  KnightBoard board = new KnightBoard(5, 5);
     System.out.println(board.toString());
     System.out.println(board.solve(0, 0));
     System.out.println(board.toString()); */
-
+/*
   for (int index = 0; index < 6; index ++){
     runTest(index);
-  }
+  } */
 
 //  KnightBoard board = new KnightBoard(8,8);
 
