@@ -187,9 +187,9 @@ public boolean removeKnight (int row, int col){ // might have to add a level par
   }
 }
 
-private List<Move> possibleMovesFromCurrent(Move position){
-  List <move> moves = new ArrayLisst<>(8);
-  int currentRow = this.getRoww();
+private List<Move> possibleMovesFromCurrent(Move current){
+  List <move> moves = new ArrayList<>(8);
+  int currentRow = this.getRow();
   int currentCol = this.getCol();
   for (int location = 0; location < possibleCoordinates.size(); location++){
     Move moveAtCurrentLocation = new Move(possibleCoordinates[i],possibleCoordinates[i+1]);
@@ -237,8 +237,17 @@ public int countSolutions(int startingRow, int startingCol) {
 
 }
 
-public int countHelper(int row, int col, int level) {
+private ArrayList<move> sortedMoves (int currentRow, int currentCol){
+  ArrayList<Integer> modelList = new ArrayList<Integer>();
+  ArrayList<move> sortedList = new ArrayList<move>(); 
+  return sortedList;
+}
+
+public int countHelper(Move current, int level) {
   int total = 0;
+  addKnigh(current, level += 1);
+  ArrayList<Move> movesFromCurrent =
+
   if (row >= board.length || col >= board[0].length || row < 0 || col < 0){
     return 0;
   }
