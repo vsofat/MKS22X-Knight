@@ -1,35 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class move{
-
-  int row;
-  int col;
-  int possibleMoves;
-
-  private move(int rowInput, int colInput){
-    row = rowInput;
-    col = colInput;
-  }
-
-  public int getCol(){
-    return this.col;
-  }
-
-  public int getRow(){
-    return this.row;
-  }
-
-  public int getPossibleMoves(){
-    return possibleMoves;
-  }
-
-  public void setPossibleMoves(int possibleMoves){
-    this.possibleMoves = possibleMoves;
-  }
-
-}
-
 public class KnightBoard{
 
   public static void main(String[] args) {
@@ -69,7 +40,7 @@ private int total = 0;
 private int[][] model; // model board
 private int rowLen;
 private int colLen;
-int[] possibleCoordinates = new int[row - 2, col + 1, row - 2, col - 1, row - 1, col - 2, row - 1, col + 2, row + 2, col + 1, row + 2, col - 1, row + 1, col - 2, row + 1, col + 2]
+int[] possibleCoordinates = new int[]{row - 2, col + 1, row - 2, col - 1, row - 1, col - 2, row - 1, col + 2, row + 2, col + 1, row + 2, col - 1, row + 1, col - 2, row + 1, col + 2};
 ArrayList<move> moveList = new ArrayList<move>(8); //moves based off sample board
 
 public KnightBoard(int rows, int cols){
@@ -237,54 +208,16 @@ public int countSolutions(int startingRow, int startingCol) {
 
 }
 
-private ArrayList<move> sortedMoves (int currentRow, int currentCol){
+private ArrayList<move> sortedMoves (Move current){
   ArrayList<Integer> modelList = new ArrayList<Integer>();
-  ArrayList<move> sortedList = new ArrayList<move>(); 
+  ArrayList<move> sortedList = new ArrayList<move>();
   return sortedList;
 }
 
 public int countHelper(Move current, int level) {
   int total = 0;
   addKnigh(current, level += 1);
-  ArrayList<Move> movesFromCurrent =
-
-  if (row >= board.length || col >= board[0].length || row < 0 || col < 0){
-    return 0;
-  }
-  if (board[row][col] != 0){
-    return 0;
-  }
-  if (level == board.length * board[0].length){
-    return 1;
-  }
-  for (int i = 0; i < 8; i++){
-    board[row][col] = level;
-    if (i == 0){
-      total += countHelper(row + 2, col + 1, level + 1);
-    }
-    if (i == 1){
-      total += countHelper(row + 2, col - 1, level + 1);
-    }
-    if (i == 2){
-      total += countHelper(row - 2, col - 1, level + 1);
-    }
-    if (i == 3){
-      total += countHelper(row - 2, col + 1, level + 1);
-    }
-    if (i == 4){
-      total += countHelper(row + 1, col + 2, level + 1);
-    }
-    if (i == 5){
-      total += countHelper(row + 1, col - 2, level + 1);
-    }
-    if (i == 6){
-      total += countHelper(row - 1, col + 2, level + 1);
-    }
-    if (i == 7){
-      total += countHelper(row - 1, col - 2, level + 1);
-    }
-    board[row][col] = 0;
-  }
+  ArrayList<Move> movesFromCurrent = sortedMoves(current);
   return total;
 } // Alex helped me change this part too
 
