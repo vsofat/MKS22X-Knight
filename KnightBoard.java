@@ -226,11 +226,12 @@ public int countHelper(Move current, int level) {
   addKnight(current, level += 1);
   ArrayList<Move> movesFromCurrent = sortedMoves(current);
   if (movesFromCurrent.size() == 0){
-    removeKnight(current);
     if (level == colLen * rowLen + 1){
+      removeKnight(current);
       return 1;
     }
     else{
+      removeKnight(current);
       return 0;
     }
   }
