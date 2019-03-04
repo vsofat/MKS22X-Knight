@@ -222,8 +222,22 @@ public int countHelper(Move current, int level) {
   int total = 0;
   addKnigh(current, level += 1);
   ArrayList<Move> movesFromCurrent = sortedMoves(current);
+  if (movesFromCurrent.size() == 0){
+    if (level == colSize * rowSize + 1){
+      return 1;
+    }
+    else{
+      return 0;
+    }
+  }
+  else{
+    for(int i = 0; i < movesFromCurrent.size(); i++){
+      total += countHelper(movesFromCurrent.get(i), level);
+      removeKnight(current);
+    }
+  }
   return total;
-} // Alex helped me change this part too
+} 
 
 // Went to CS Dojo 02/27/19 --  William helped me
 
