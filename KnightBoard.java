@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+impot java.util.Collections;
 
 public class KnightBoard{
 
@@ -209,9 +210,12 @@ public int countSolutions(int startingRow, int startingCol) {
 }
 
 private ArrayList<move> sortedMoves (Move current){
-  ArrayList<Integer> modelList = new ArrayList<Integer>();
-  ArrayList<move> sortedList = new ArrayList<move>();
-  return sortedList;
+    List<Move> possibleMoves = movesPossibleFromHere(current);
+    for(int i = 0; i < possibleMoves.size(); i++){
+    possibleMoves[i] = movesPossibleFromHere(PossibleMoves.get(i)).size();
+    }
+    Collections.sort(possibleMoves);
+    return possibleMoves;
 }
 
 public int countHelper(Move current, int level) {
