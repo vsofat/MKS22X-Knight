@@ -1,10 +1,10 @@
-public class Move implements Comparable{
+public class Move implements Comparable<Move>{
 
   int row;
   int col;
   int possibleMoves;
 
-  public move(int rowInput, int colInput){
+  public Move(int rowInput, int colInput){
     row = rowInput;
     col = colInput;
   }
@@ -23,6 +23,10 @@ public class Move implements Comparable{
 
   public void setPossibleMoves(int possibleMoves){
     this.possibleMoves = possibleMoves;
+  }
+
+  public int compareTo(Move other){
+    return this.possibleMoves - other.possibleMoves;
   }
 
 }

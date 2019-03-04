@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
-impot java.util.Collections;
+import java.util.Collections;
 
 public class KnightBoard{
 
@@ -41,8 +41,7 @@ private int total = 0;
 private int[][] model; // model board
 private int rowLen;
 private int colLen;
-int[] possibleCoordinates = new int[]{row - 2, col + 1, row - 2, col - 1, row - 1, col - 2, row - 1, col + 2, row + 2, col + 1, row + 2, col - 1, row + 1, col - 2, row + 1, col + 2};
-ArrayList<move> moveList = new ArrayList<move>(8); //moves based off sample board
+ArrayList<Move> moveList = new ArrayList<Move>(8); //moves based off sample board
 
 public KnightBoard(int rows, int cols){
   if (rows <= 0 || cols <= 0){
@@ -120,17 +119,17 @@ public boolean solve(int startingRow, int startingCol){
 
 public boolean solveHelper( Move current, int level){
   addKnight(current, level += 1);
-  List<Move> nextMove = possibleMovesFromCurrent(current);
-  if(possibleMovesFromCurrent.size() == 0){
-    return 0; // how do we change the level here
+  ArrayList<Move> nextMove = possibleMovesFromCurrent(current);
+  if(nextMove.size() == 0){
+    return level == rowLen * colLen + 1; // went through everything
   }
   else{
-    for(index = 0; index < possibleMovesFromCurrent.size(); index++){
-      if(solveHelper(possibleMovesFromCurrent.get(index),level)){
+    for(int index = 0; index < nextMove.size(); index++){
+      if(solveHelper(nextMove.get(index),level)){
         return true;
       }
       else{
-        return removeKnight(current);
+        removeKnight(current);
       }
     }
   }
@@ -159,23 +158,24 @@ public boolean removeKnight (int row, int col){ // might have to add a level par
   }
 }
 
-private List<Move> possibleMovesFromCurrent(Move current){
-  List <move> moves = new ArrayList<>(8);
-  int currentRow = this.getRow();
-  int currentCol = this.getCol();
-  for (int location = 0; location < possibleCoordinates.size(); location++){
-    Move moveAtCurrentLocation = new Move(possibleCoordinates[i],possibleCoordinates[i+1]);
+private ArrayList<Move> possibleMovesFromCurrent(Move current){
+  ArrayList<Move> moves = new ArrayList<>(8);
+  int row = current.getRow();
+  int col = current.getCol();
+  int[] possibleCoordinates = new int[]{row - 2, col + 1, row - 2, col - 1, row - 1, col - 2, row - 1, col + 2, row + 2, col + 1, row + 2, col - 1, row + 1, col - 2, row + 1, col + 2};
+  for (int location = 0; location < possibleCoordinates.length; location++){
+    Move moveAtCurrentLocation = new Move(possibleCoordinates[location],possibleCoordinates[location+1]);
     if (possible(moveAtCurrentLocation)){
-      move.add(moveAtCurrentLocation);
+      moves.add(moveAtCurrentLocation);
     }
   }
 }
 
-private boolean possible(Move move){
-  int currentRow = this.getRoww();
-  int currentCol = this.getCol();
-  if (row >= 0 && col >= 0 && row < rowLen && col < colLen){
-    if(board[row][col] == 0){
+private boolean possible(Move current){
+  int currentRow = current.getRow();
+  int currentCol = current.getCol();
+  if (currentRow >= 0 && currentCol >= 0 && currentRow < rowLen && currentCol < colLen){
+    if(board[currentRow][currentCol] == 0){
       return true;
     }
   }
@@ -184,7 +184,7 @@ private boolean possible(Move move){
   }
 }
 
-private void removeKinght(Move move){
+private void removeKnight(Move move){
   board[move.getRow()][move.getCol()] = 0;
 }
 
@@ -205,14 +205,14 @@ public int countSolutions(int startingRow, int startingCol) {
 
   this.board = new int[rowLen][colLen];
 
-  return countHelper(startingRow, startingCol, 1);
+  return countHelper(new Move (startingRow, startingCol) , 1);
 
 }
 
-private ArrayList<move> sortedMoves (Move current){
-    List<Move> possibleMoves = movesPossibleFromHere(current);
+private ArrayList<Move> sortedMoves (Move current){
+    ArrayList<Move> possibleMoves = possibleMovesFromCurrent(current);
     for(int i = 0; i < possibleMoves.size(); i++){
-    possibleMoves[i] = movesPossibleFromHere(PossibleMoves.get(i)).size();
+    possibleMoves.set(i) = possibleMovesFromCurrent(possibleMoves.get(i)).size();
     }
     Collections.sort(possibleMoves);
     return possibleMoves;
@@ -220,10 +220,10 @@ private ArrayList<move> sortedMoves (Move current){
 
 public int countHelper(Move current, int level) {
   int total = 0;
-  addKnigh(current, level += 1);
+  addKnight(current, level += 1);
   ArrayList<Move> movesFromCurrent = sortedMoves(current);
   if (movesFromCurrent.size() == 0){
-    if (level == colSize * rowSize + 1){
+    if (level == colLen * rowLen + 1){
       return 1;
     }
     else{
@@ -237,7 +237,7 @@ public int countHelper(Move current, int level) {
     }
   }
   return total;
-} 
+}
 
 // Went to CS Dojo 02/27/19 --  William helped me
 
