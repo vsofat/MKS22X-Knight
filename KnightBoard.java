@@ -164,7 +164,7 @@ private ArrayList<Move> possibleMovesFromCurrent(Move current){
   int row = current.getRow();
   int col = current.getCol();
   int[] possibleCoordinates = new int[]{row - 2, col + 1, row - 2, col - 1, row - 1, col - 2, row - 1, col + 2, row + 2, col + 1, row + 2, col - 1, row + 1, col - 2, row + 1, col + 2};
-  for (int location = 0; location < possibleCoordinates.length; location++){
+  for (int location = 0; location < possibleCoordinates.length; location += 2){
     Move moveAtCurrentLocation = new Move(possibleCoordinates[location],possibleCoordinates[location+1]);
     if (possible(moveAtCurrentLocation)){
       moves.add(moveAtCurrentLocation);
@@ -226,6 +226,7 @@ public int countHelper(Move current, int level) {
   addKnight(current, level += 1);
   ArrayList<Move> movesFromCurrent = sortedMoves(current);
   if (movesFromCurrent.size() == 0){
+    removeKnight(current);
     if (level == colLen * rowLen + 1){
       return 1;
     }
@@ -236,7 +237,6 @@ public int countHelper(Move current, int level) {
   else{
     for(int i = 0; i < movesFromCurrent.size(); i++){
       total += countHelper(movesFromCurrent.get(i), level);
-      removeKnight(current);
     }
   }
   return total;
