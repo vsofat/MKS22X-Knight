@@ -80,6 +80,7 @@ public static void runTest(int i){ // from Mr. K's code
         System.out.println("FAIL board size: "+m[i%m.length]+"x"+n[i%m.length]+" "+ans+" vs "+correct);
       }
     }catch(Exception e){
+      e.printStackTrace();
       System.out.println("FAIL Exception case: "+i);
 
     }
@@ -240,6 +241,7 @@ public int countHelper(Move current, int level) {
       total += countHelper(movesFromCurrent.get(i), level);
     }
   }
+  removeKnight(current);
   return total;
 }
 
