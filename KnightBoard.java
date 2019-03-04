@@ -9,11 +9,12 @@ public class KnightBoard{
     System.out.println(board.toString());
     System.out.println(board.solve(0, 0));
     System.out.println(board.toString()); */
-    /*  for (int index = 0; index < 6; index ++){
-    runTest(index);
-  }*/
 
-  KnightBoard board = new KnightBoard(8,8);
+  for (int index = 0; index < 6; index ++){
+    runTest(index);
+  }
+
+//  KnightBoard board = new KnightBoard(8,8);
 
   // testing model board
   /*
@@ -169,6 +170,7 @@ private ArrayList<Move> possibleMovesFromCurrent(Move current){
       moves.add(moveAtCurrentLocation);
     }
   }
+  return moves;
 }
 
 private boolean possible(Move current){
@@ -182,6 +184,7 @@ private boolean possible(Move current){
   else{
     return false;
   }
+  return false;
 }
 
 private void removeKnight(Move move){
@@ -212,7 +215,7 @@ public int countSolutions(int startingRow, int startingCol) {
 private ArrayList<Move> sortedMoves (Move current){
     ArrayList<Move> possibleMoves = possibleMovesFromCurrent(current);
     for(int i = 0; i < possibleMoves.size(); i++){
-    possibleMoves.set(i) = possibleMovesFromCurrent(possibleMoves.get(i)).size();
+    possibleMoves.get(i).setPossibleMoves(possibleMovesFromCurrent(possibleMoves.get(i)).size());
     }
     Collections.sort(possibleMoves);
     return possibleMoves;
