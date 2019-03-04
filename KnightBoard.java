@@ -143,63 +143,24 @@ public boolean solve(int startingRow, int startingCol){
       }
     }
   }
-  return solveHelper(new Move (startingRow, startingCol), 1); // need to change solveHelper to have a move parameter 
+  return solveHelper(new Move (startingRow, startingCol), 1); // need to change solveHelper to have a move parameter
 }
 
-public boolean solveHelper(int row, int col, int level){
-  if (row >= board.length || col >= board[0].length || row < 0 || col < 0){
-    return false;
+public boolean solveHelper( Move current, int level){
+  addKnight(current, level += 1);
+  List<Move> nextMove = possibleMovesFromCurrent(current);
+  if(possibleMovesFromCurrent.size() == 0){
+    return 0; // how do we change the level here
   }
-  if (board[row][col] != 0){
-    return false;
-  }
-  if (level == board.length * board[0].length){
-    board[row][col] = level;
-    return true;
-  }
-  for (int i = 0; i < 8; i++){
-    board[row][col] = level;
-    if (i == 0){
-      if (solveHelper(row + 2, col + 1, level + 1)){
+  else{
+    for(index = 0; index < possibleMovesFromCurrent.size(); index++){
+      if(solveHelper(possibleMovesFromCurrent.get(index),level)){
         return true;
       }
-    }
-    if (i == 1){
-      if (solveHelper(row + 2, col - 1, level + 1)){
-        return true;
+      else{
+        return removeKnight(current);
       }
     }
-    if (i == 2){
-      if (solveHelper(row - 2, col - 1, level + 1)){
-        return true;
-      }
-    }
-    if (i == 3){
-      if (solveHelper(row - 2, col + 1, level + 1)){
-        return true;
-      }
-    }
-    if (i == 4){
-      if (solveHelper(row + 1, col + 2, level + 1)){
-        return true;
-      }
-    }
-    if (i == 5){
-      if (solveHelper(row + 1, col - 2, level + 1)){
-        return true;
-      }
-    }
-    if (i == 6){
-      if (solveHelper(row - 1, col + 2, level + 1)){
-        return true;
-      }
-    }
-    if (i == 7){
-      if (solveHelper(row - 1, col - 2, level + 1)){
-        return true;
-      }
-    }
-    board[row][col] = 0;
   }
   return false;
 } // got help from Alex to restructure
