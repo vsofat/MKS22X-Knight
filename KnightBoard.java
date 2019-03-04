@@ -223,6 +223,19 @@ public boolean removeKnight (int row, int col){ // might have to add a level par
   }
 }
 
+private boolean possible(Move move){
+  int currentRow = this.getRoww();
+  int currentCol = this.getCol();
+  if (row >= 0 && col >= 0 && row < rowLen && col < colLen){
+    if(board[row][col] == 0){
+      return true;
+    }
+  }
+  else{
+    return false;
+  }
+}
+
 private void removeKinght(Move move){
   board[move.getRow()][move.getCol()] = 0;
 }
