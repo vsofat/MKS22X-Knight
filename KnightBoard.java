@@ -130,13 +130,16 @@ public String toString(){
 }
 
 public boolean solve(int startingRow, int startingCol){
+  if (possible(new Move(startingRow, startingCol)) == false){
+    throw new IllegalArgumentException("There are no possible moves from given row and column. Please try another set of coordinates.");
+  }
   if (startingRow < 0 || startingRow >= board.length || startingCol < 0 || startingCol >= board[0].length){
     throw new IllegalArgumentException("The values for starting row and starting column must be greater than zero.");
   }
   for (int row = 0; row < board.length; row++){
     for (int col = 0; col < board[0].length; col++){
       if (board[row][col] != 0){
-        throw new IllegalArgumentException("Board can only contain 0");
+        throw new IllegalArgumentException("Board can only contain 0s.");
       }
     }
   }
