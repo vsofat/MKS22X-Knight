@@ -143,7 +143,7 @@ public boolean solve(int startingRow, int startingCol){
       }
     }
   }
-  return solveHelper(startingRow, startingCol, 1);
+  return solveHelper(new Move (startingRow, startingCol), 1); // need to change solveHelper to have a move parameter 
 }
 
 public boolean solveHelper(int row, int col, int level){
